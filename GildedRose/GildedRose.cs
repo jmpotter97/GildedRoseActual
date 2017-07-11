@@ -15,45 +15,50 @@ namespace GildedRose
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
-            {     
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+            {
+                
+                if (Items[i].SellIn > 0)
                 {
-                        Items[i].Quality = DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
+                    if (Items[i].Name.IndexOf("Aged Brie") == -1 &&
+                        Items[i].Name.IndexOf("Backstage passes to a TAFKAL80ETC concert") == -1)
                     {
-                        int degradeBy = CheckConjure(Items[i].Name);
-                        Items[i].Quality = Items[i].Quality + degradeBy;
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                        Items[i].Quality = DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
+                    }
+                    else
+                    {
+                        if (Items[i].Quality < 50)
                         {
-                            if (Items[i].SellIn < 11)
+                            int degradeBy = CheckConjure(Items[i].Name, Items[i].SellIn);
+                            Items[i].Quality = Items[i].Quality + degradeBy;
+                            if (Items[i].Name.IndexOf("Backstage passes to a TAFKAL80ETC concert") != -1)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].SellIn < 11)
                                 {
-                                    Items[i].Quality = DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
+                                    if (Items[i].Quality < 50)
+                                    {
+                                        Items[i].Quality =
+                                            DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
+                                    }
                                 }
-                            }
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].SellIn < 6)
                                 {
-                                    Items[i].Quality = DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
+                                    if (Items[i].Quality < 50)
+                                    {
+                                        Items[i].Quality =
+                                            DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+
+
+                if (Items[i].SellIn <= 0)
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
+                    if (Items[i].Name.IndexOf("Aged Brie") == -1)
                     {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        if (Items[i].Name.IndexOf("Backstage passes to a TAFKAL80ETC concert") == -1)
                         {
                                     Items[i].Quality = DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
                         }
@@ -64,30 +69,41 @@ namespace GildedRose
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = DegradeQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
-                        }
+                            Items[i].Quality = SortQuality(Items[i].Name, Items[i].SellIn, Items[i].Quality);
                     }
                 }
+                Items[i].SellIn = DecreaseSellIn(Items[i].Name, Items[i].SellIn);
                 if (Items[i].Quality < 0) Items[i].Quality = 0;
             }
         }
 
-        public int CheckQuality(int quality)
+        public int DecreaseSellIn(string name, int sellin)
         {
+            if (name != "Sulfuras, Hand of Ragnaros")
+            {
+                sellin = sellin - 1;
+            }
+            return sellin;
+        }
+        public int SortQuality(string name, int sellin, int quality)
+        {
+            if (quality < 50)
+            {
+                quality = DegradeQuality(name, sellin, quality);
+            }
             return quality;
         }
-        public int CheckConjure(string name)
+        public int CheckConjure(string name, int sellin)
         {
-            int degradeBy;
+            int degradeBy = 1;
+
+            if (sellin <= 0)
+            {
+                degradeBy = degradeBy * 2;
+            }
             if (name.IndexOf("Conjured") != -1)
             {
-                degradeBy = 2;
-            }
-            else
-            {
-                degradeBy = 1;
+                degradeBy = degradeBy * 2;
             }
             return degradeBy;
         }
@@ -95,7 +111,7 @@ namespace GildedRose
         public int DegradeQuality(string name, int sellin, int quality)
         {
             string betterorworse = BetterOrWorseQuality(name);
-            int degradeBy = CheckConjure(name);
+            int degradeBy = CheckConjure(name, sellin);
             if (betterorworse == "increase")
             {
                 quality = quality + degradeBy;
