@@ -1,0 +1,14 @@
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\GildedRose.exe.config
+C:\Work\Training\GildedRose\GildedRose\obj\Debug\GildedRose.csprojResolveAssemblyReference.cache
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\GildedRose.exe
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\GildedRose.pdb
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\ApprovalTests.dll
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\ApprovalUtilities.dll
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\ApprovalUtilities.Net45.dll
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\nunit.framework.dll
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\ApprovalTests.xml
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\ApprovalUtilities.xml
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\ApprovalUtilities.Net45.xml
+C:\Work\Training\GildedRose\GildedRose\bin\Debug\nunit.framework.xml
+C:\Work\Training\GildedRose\GildedRose\obj\Debug\GildedRose.exe
+C:\Work\Training\GildedRose\GildedRose\obj\Debug\GildedRose.pdb
